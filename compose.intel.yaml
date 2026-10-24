@@ -1,0 +1,16 @@
+# Experimental: supported Intel XPU GPUs and drivers on a Linux host.
+services:
+  voiceswap:
+    gpus: !reset []
+    build:
+      dockerfile: Dockerfile.intel
+      args:
+        TORCH_INDEX: xpu
+    devices:
+      - /dev/dri:/dev/dri
+    group_add:
+      - "${VIDEO_GID:-44}"
+      - "${RENDER_GID:-109}"
+    environment:
+      VOICESWAP_DEVICE: xpu
+

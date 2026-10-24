@@ -1,0 +1,1 @@
+"""VoiceSwapAI local application service."""

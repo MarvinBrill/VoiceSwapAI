@@ -1,0 +1,16 @@
+# Supported AMD ROCm GPUs on a Linux host; not Docker Desktop on Windows.
+services:
+  voiceswap:
+    gpus: !reset []
+    build:
+      args:
+        TORCH_INDEX: rocm6.3
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - "${VIDEO_GID:-44}"
+      - "${RENDER_GID:-109}"
+    environment:
+      VOICESWAP_DEVICE: cuda
+

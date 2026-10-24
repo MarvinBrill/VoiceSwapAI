@@ -1,0 +1,22 @@
+name: voiceswapai
+services:
+  voiceswap:
+    build:
+      context: .
+      args:
+        TORCH_INDEX: cu128
+    ports:
+      - "127.0.0.1:${VOICESWAP_PORT:-7860}:8000"
+    volumes:
+      - voiceswap-data:/data
+    environment:
+      VOICESWAP_DEVICE: cuda
+      VOICESWAP_AUTO_SETUP: "1"
+    gpus: all
+    shm_size: "4gb"
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 30s
+volumes:
+  voiceswap-data:
+

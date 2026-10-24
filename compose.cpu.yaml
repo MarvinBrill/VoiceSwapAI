@@ -1,0 +1,9 @@
+services:
+  voiceswap:
+    gpus: !reset []
+    build:
+      args:
+        TORCH_INDEX: cpu
+    environment:
+      VOICESWAP_DEVICE: cpu
+

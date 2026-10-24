@@ -1,0 +1,14 @@
+.git
+.venv
+.venv-directml
+.windows-runtime
+**/node_modules
+frontend/dist
+data
+**/__pycache__
+.pytest_cache
+.ruff_cache
+test-results
+**/test-results
+**/playwright-report
+
