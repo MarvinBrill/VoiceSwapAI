@@ -17,6 +17,10 @@ AUDIO_EXTENSIONS = {
     ".webm",
 }
 
+# 320 kbit/s MP3 uses MPEG-1; RVC's 40 kHz models need resampling at export.
+MP3_SAMPLE_RATES = {32000, 44100, 48000}
+MP3_DEFAULT_SAMPLE_RATE = 44100
+
 
 def probe(path: Path):
     result = subprocess.run(
@@ -62,13 +66,23 @@ def decode(source, destination, sample_rate, channels=1):
 
 
 def encode(source, destination, sample_rate=0):
+    suffix = Path(destination).suffix.lower()
+    if suffix == ".mp3" and sample_rate not in MP3_SAMPLE_RATES:
+        sample_rate = MP3_DEFAULT_SAMPLE_RATE
+
     args = ["ffmpeg", "-nostdin", "-v", "error", "-y", "-i", str(source)]
     if sample_rate:
         args += ["-ar", str(sample_rate)]
-    suffix = Path(destination).suffix
     args += {
         ".wav": ["-c:a", "pcm_s24le"],
         ".flac": ["-c:a", "flac"],
         ".mp3": ["-c:a", "libmp3lame", "-b:a", "320k"],
     }[suffix]
-    subprocess.run([*args, str(destination)], check=True)
+    try:
+        subprocess.run(
+            [*args, str(destination)], check=True, capture_output=True,
+            text=True, encoding="utf-8", errors="replace",
+        )
+    except subprocess.CalledProcessError as error:
+        detail = (error.stderr or "FFmpeg hat keine Fehlerdetails geliefert.").strip()
+        raise RuntimeError(f"Audioexport ({suffix[1:].upper()}) fehlgeschlagen: {detail[-4000:]}") from error

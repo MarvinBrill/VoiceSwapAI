@@ -32,11 +32,19 @@ needed. uv sets up Python 3.12. Python packages are installed in the separate
 Confirm Windows installation dialogs if shown. The launcher does not modify
 security policies or add antivirus exclusions.
 
-The launcher then checks actual GPU calculations, training gradients and checkpoints
+The launcher then checks actual GPU calculations, training gradients, checkpoints,
+and the voice excitation waveform at 32/40/48 kHz against a CPU reference
 and opens http://localhost:7860. Keep the terminal open while using the app.
 **Press Ctrl+C to stop.** Use the same launcher for subsequent starts.
 
 ## Select the correct GPU
+
+If the converted voice sounds metallic or robotic, use the latest project files:
+a mixed integer/float arithmetic bug in the DirectML tone generator has been fixed.
+Startup now checks the actual waveform as well. Restart after updating and run the
+conversion again; previously generated audio is not repaired retroactively.
+Missing GPU FAISS and individual CPU fallback warnings alone do not establish an
+audio quality problem.
 
 ```powershell
 .\start-windows.cmd --list-devices

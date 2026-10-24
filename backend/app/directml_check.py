@@ -11,6 +11,24 @@ from .devices import device_info, select_device
 from .runtime import configure_engine
 
 
+def check_voice_source(device):
+    from infer.module.models import SineGen
+
+    # A successful GPU operation can still return wrong audio. Check values, not
+    # just finiteness: mixed integer/float broadcasting once flattened the tone.
+    pitch = (200 + 80 * torch.sin(torch.arange(100) * 0.017)).reshape(1, -1, 1)
+    for rate in (32000, 40000, 48000):
+        generator = SineGen(rate)
+        expected = generator._f02sine(pitch, rate // 100)
+        actual = generator._f02sine(pitch.to(device), rate // 100).cpu()
+        if not torch.allclose(actual, expected, rtol=0, atol=0.002):
+            raise RuntimeError(
+                f"DirectML erzeugt eine abweichende Stimm-Grundwelle bei {rate} Hz. "
+                "App und Grafiktreiber aktualisieren; die GPU-Prüfung muss erfolgreich sein."
+            )
+    print("Stimm-Grundwelle bei 32/40/48 kHz stimmt mit der CPU-Referenz überein: OK", flush=True)
+
+
 def check():
     configure_engine()
     from train.mel_processing import mel_spectrogram_torch
@@ -23,6 +41,7 @@ def check():
     print(f"DirectML: {device_info()['name']} ({device})", flush=True)
     torch.set_num_threads(4)
     torch.manual_seed(42)
+    check_voice_source(device)
     network = torch.nn.Sequential(
         torch.nn.Conv1d(1, 8, 5, padding=2),
         torch.nn.LeakyReLU(0.1),

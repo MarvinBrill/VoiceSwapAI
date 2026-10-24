@@ -50,6 +50,7 @@ Trainingsdaten. Ein exportiertes `.pth` allein reicht dafür nicht.
    Bei drohender Übersteuerung wird der fertige Mix insgesamt abgesenkt. Die separaten
    Song-Spuren werden ohne diese Lautstärkeanpassungen exportiert.
 5. Exportformat wählen: WAV/FLAC mit 24 Bit oder MP3 mit 320 kbit/s.
+   MP3 verwendet bei 40-kHz-Modellen automatisch 44,1 kHz; WAV/FLAC behalten 40 kHz bei.
 6. **Stimme verwandeln** starten. Das fertige Audio im Browser anhören und herunterladen.
    Beim Song-Modus gibt es außerdem neue Stimme und Begleitung als separate Downloads.
 

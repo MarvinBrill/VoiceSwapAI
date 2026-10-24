@@ -24,6 +24,9 @@ Local adaptations:
   and relative-position rearrangement, CPU-portable checkpoints, and positive
   padding followed by cropping in the sine generator. RMVPE keeps its convolutional
   network on DirectML and its unsupported GRU/spectral preprocessing on CPU.
+- The sine generator uses explicit floating-point sample offsets and harmonic
+  multipliers to avoid incorrect DirectML mixed integer/float broadcasting.
+  Startup checks compare its waveform with CPU results at 32/40/48 kHz.
 
 Dataset preprocessing, feature extraction orchestration, streaming conversion,
 asset installation, model library and job management live in `backend/app`.

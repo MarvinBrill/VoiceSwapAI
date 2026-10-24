@@ -56,8 +56,8 @@ for (const separate of [false, true]) {
     await page
       .getByRole("combobox", { name: /Voice-Modell/ })
       .selectOption("model");
-    if (separate)
-      await page.getByRole("button", { name: /Kompletter Song/ }).click();
+    if (!separate)
+      await page.getByRole("button", { name: /Stimme pur/ }).click();
 
     for (const gain of [0, 6.5, -6, 12, -24]) {
       await volume.fill(String(gain));

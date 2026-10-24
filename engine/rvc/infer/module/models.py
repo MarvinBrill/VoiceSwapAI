@@ -307,8 +307,10 @@ class SineGen(torch.nn.Module):
 
     ### @yxlllc
     def _f02sine(self, f0, upp):
+        # DirectML can silently miscompute broadcast float * integer tensors.
+        # Keep sample offsets and harmonics in the pitch dtype on every backend.
         rad = f0 / self.sampling_rate * torch.arange(
-            1, upp + 1, device=f0.device
+            1, upp + 1, device=f0.device, dtype=f0.dtype
         )
         rad2 = torch.fmod(rad[..., -1:].float() + 0.5, 1.0) - 0.5
         rad_acc = rad2.cumsum(dim=1).fmod(1.0).to(f0)
@@ -317,7 +319,7 @@ class SineGen(torch.nn.Module):
         rad = rad.reshape(f0.shape[0], -1, 1)
         rad = torch.multiply(
             rad,
-            torch.arange(1, self.dim + 1, device=f0.device).reshape(1, 1, -1),
+            torch.arange(1, self.dim + 1, device=f0.device, dtype=f0.dtype).reshape(1, 1, -1),
         )
         rand_ini = torch.rand(1, 1, self.dim, device=f0.device)
         rand_ini[..., 0] = 0

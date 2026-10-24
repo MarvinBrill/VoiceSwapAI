@@ -1,4 +1,28 @@
-# Verifizierter Stand vom 24. Oktober 2026
+# Verifizierter Stand vom 25. Oktober 2026
+
+## Korrektur: DirectML-Tongenerator (25. Oktober)
+
+Ein numerischer Fehler wurde auf der RTX 5070 Ti mit DirectML 0.2.5/PyTorch 2.4.1
+reproduziert: Die Multiplikation von Float-Pitchwerten mit ganzzahligen, gebroadcasteten
+Samplepositionen erzeugte innerhalb eines Pitchframes konstante statt ansteigende
+Phasenwerte. Der vorherige reine Ablauf-/Endlichkeitstest erkannte diese Klangursache
+nicht. Samplepositionen und Harmonische haben jetzt ausdrücklich denselben
+Gleitkommatyp wie die Tonhöhe; die GPU-Netze bleiben aktiv.
+
+- Grundwellen mit variabler Tonhöhe bei 32/40/48 kHz über 1 und 32 Sekunden gegen
+  eine unabhängige Phasenreferenz geprüft, einschließlich CUDA und DirectML.
+- Harmonische mit festen Startphasen gegen CPU geprüft.
+- 19 Tests in der DirectML-Umgebung erfolgreich, 7 CUDA-Fälle dort übersprungen;
+  14 Grundwellen-/Harmonischentests in der CUDA-Umgebung erfolgreich, 7 DirectML-Fälle
+  dort übersprungen. DirectML-Starttest einschließlich Training/Checkpoint erfolgreich.
+- RMVPE bei einem synthetischen 220-Hz-Ton: maximale CPU/DirectML-Abweichung 0,083 Hz.
+- HuBERT: relative RMS-Abweichung zur CPU rund 0,00044 % beim synthetischen Vergleich.
+- Vollständiger Synthesizer mit identischen Testgewichten und festgesetztem Rauschen:
+  relative RMS-Abweichung zur CPU unter 0,008 % für 1 und 3 Sekunden.
+
+Dies belegt die numerische Korrektur auf der vorhandenen Hardware. Die RX 6750 XT,
+die Aufnahme und das Modell des betroffenen Nutzers standen für diesen Vergleich
+nicht zur Verfügung; die konkrete Hörqualität muss dort erneut geprüft werden.
 
 ## Ergänzung: Windows DirectML
 

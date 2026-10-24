@@ -50,6 +50,7 @@ An exported `.pth` alone is not sufficient.
    prevent clipping, the final mix is turned down as a whole. Separate song stems
    are exported without these volume adjustments.
 5. Choose WAV/FLAC at 24 bit or MP3 at 320 kbit/s.
+   MP3 automatically uses 44.1 kHz for 40 kHz models; WAV/FLAC retain 40 kHz.
 6. Select **Stimme verwandeln** (convert voice). Listen to the result in the browser
    and download it. Song mode also provides separate new-vocal and accompaniment files.
 

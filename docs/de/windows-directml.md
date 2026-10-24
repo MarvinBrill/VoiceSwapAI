@@ -32,7 +32,8 @@ die benötigten Python-Pakete; anschließend wird die Weboberfläche gebaut.
 Falls Windows einen Installationsdialog anzeigt, diesen bestätigen. Es werden keine
 Sicherheitsrichtlinien oder Antivirus-Ausnahmen geändert.
 
-Danach prüft der Launcher echte GPU-Rechenoperationen, Trainingsgradienten und Checkpoints
+Danach prüft der Launcher echte GPU-Rechenoperationen, Trainingsgradienten, Checkpoints
+und die Stimm-Grundwelle bei 32/40/48 kHz gegen eine CPU-Referenz
 und öffnet http://localhost:7860. Das Terminal während der Nutzung offen lassen.
 **Strg+C beendet die App.** Beim nächsten Mal dieselbe Startdatei verwenden.
 
@@ -48,6 +49,13 @@ und öffnet http://localhost:7860. Das Terminal während der Nutzung offen lasse
 wird der DirectML-Standardadapter verwendet. Die Nummer bei späteren Starts erneut
 angeben. Auch die Listen-/Prüfoptionen erledigen zunächst eine ggf. nötige Einrichtung.
 Unter **System & Speicher** die GPU und **DirectML** kontrollieren.
+
+Bei blechernem oder roboterartigem Klang eine aktuelle Projektversion verwenden:
+Ein Fehler bei gemischten Ganzzahl-/Gleitkommaoperationen im DirectML-Tongenerator
+wurde behoben. Der Starttest prüft nun auch die tatsächliche Wellenform. Nach dem
+Update die App neu starten und die Konvertierung erneut ausführen; vorhandene
+Audiodateien werden dadurch nicht nachträglich korrigiert. Meldungen über fehlendes
+GPU-FAISS oder CPU-Fallbacks einzelner Operatoren belegen allein keinen Klangfehler.
 
 Weitere Optionen:
 

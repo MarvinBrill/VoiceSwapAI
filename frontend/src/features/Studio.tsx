@@ -48,7 +48,7 @@ export function Studio({
   const [format, setFormat] = useState("wav");
   const [sampleRate, setSampleRate] = useState(0);
   const [speaker, setSpeaker] = useState(0);
-  const [separate, setSeparate] = useState(false);
+  const [separate, setSeparate] = useState(true);
   const [vocalGain, setVocalGain] = useState(0);
   const [backingGain, setBackingGain] = useState(0);
   const selected = library.audio.filter((audio) => audioIds.includes(audio.id));
@@ -203,17 +203,6 @@ export function Studio({
           >
             <div className="preset-row">
               <button
-                className={!separate ? "preset active" : "preset"}
-                onClick={() => setSeparate(false)}
-              >
-                <Mic2 size={18} />
-                <span>
-                  <strong>Stimme pur</strong>
-                  <small>Sprache oder isolierter Gesang</small>
-                </span>
-                {!separate && <span className="selected-dot" />}
-              </button>
-              <button
                 className={separate ? "preset active" : "preset"}
                 onClick={() => setSeparate(true)}
               >
@@ -223,6 +212,17 @@ export function Studio({
                   <small>Gesang trennen & neu mischen</small>
                 </span>
                 {separate && <span className="selected-dot" />}
+              </button>
+              <button
+                className={!separate ? "preset active" : "preset"}
+                onClick={() => setSeparate(false)}
+              >
+                <Mic2 size={18} />
+                <span>
+                  <strong>Stimme pur</strong>
+                  <small>Sprache oder isolierter Gesang</small>
+                </span>
+                {!separate && <span className="selected-dot" />}
               </button>
             </div>
             {directml && separate && (
@@ -412,6 +412,13 @@ export function Studio({
                 ))}
               </select>
             </label>
+            {format === "mp3" &&
+              (sampleRate || model?.sample_rate) === 40000 && (
+                <p className="caption left">
+                  MP3 unterstützt keine 40 kHz. Der Export verwendet automatisch
+                  44,1 kHz.
+                </p>
+              )}
             <div className="export-summary">
               <span>{selected.length} Audiodateien</span>
               <span>{format === "mp3" ? "320 kbit/s" : "24 Bit"}</span>
