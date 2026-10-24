@@ -43,6 +43,12 @@ Trainingsdaten. Ein exportiertes `.pth` allein reicht dafür nicht.
    **Kompletter Song** trennt zuerst Gesang und Begleitung und mischt sie anschließend neu.
 4. Tonhöhe, Indexstärke, Konsonantenschutz, Lautstärkeverlauf und Pitch-Verfahren anpassen.
    Zum Einstieg die Standardwerte verwenden. ±12 Halbtöne ändern die Stimme um eine Oktave.
+   Unter **Erweiterte Einstellungen → Stimmenlautstärke** lässt sich die neue Stimme
+   von **−24 bis +12 dB** in 0,5-dB-Schritten anpassen; **0 dB** verändert nichts.
+   Der Regler wirkt bei **Stimme pur** und **Kompletter Song**. Im Song-Modus wird die
+   Stimme vor dem Mischen verstärkt; die Begleitung hat ihren eigenen Regler.
+   Bei drohender Übersteuerung wird der fertige Mix insgesamt abgesenkt. Die separaten
+   Song-Spuren werden ohne diese Lautstärkeanpassungen exportiert.
 5. Exportformat wählen: WAV/FLAC mit 24 Bit oder MP3 mit 320 kbit/s.
 6. **Stimme verwandeln** starten. Das fertige Audio im Browser anhören und herunterladen.
    Beim Song-Modus gibt es außerdem neue Stimme und Begleitung als separate Downloads.

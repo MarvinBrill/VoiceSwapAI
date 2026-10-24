@@ -264,15 +264,6 @@ export function Studio({
                 </p>
                 <div className="control-grid">
                   <Slider
-                    label="Neue Stimme"
-                    value={vocalGain}
-                    min={-24}
-                    max={12}
-                    step={1}
-                    unit=" dB"
-                    onChange={setVocalGain}
-                  />
-                  <Slider
                     label="Begleitung"
                     value={backingGain}
                     min={-24}
@@ -289,6 +280,17 @@ export function Studio({
                 Erweiterte Einstellungen <ChevronDown size={15} />
               </summary>
               <div className="control-grid">
+                <Slider
+                  label="Stimmenlautstärke"
+                  value={vocalGain}
+                  min={-24}
+                  max={12}
+                  step={0.5}
+                  unit=" dB"
+                  showSign
+                  onChange={setVocalGain}
+                  hint="0 dB ist unverändert. Plus verstärkt die neue Stimme, Minus senkt sie ab. Bei Songs bleibt die Begleitung separat regelbar."
+                />
                 <Slider
                   label="Konsonantenschutz"
                   value={protect}

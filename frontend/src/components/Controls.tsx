@@ -153,6 +153,7 @@ export function Slider({
   onChange,
   hint,
   unit = "",
+  showSign = false,
 }: {
   label: string;
   value: number;
@@ -162,6 +163,7 @@ export function Slider({
   onChange: (value: number) => void;
   hint?: string;
   unit?: string;
+  showSign?: boolean;
 }) {
   const id = useId();
   return (
@@ -169,6 +171,7 @@ export function Slider({
       <div>
         <label htmlFor={id}>{label}</label>
         <output htmlFor={id}>
+          {showSign && value >= 0 ? "+" : ""}
           {Number(value.toFixed(2))}
           {unit}
         </output>

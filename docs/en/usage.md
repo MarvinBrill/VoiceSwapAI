@@ -43,6 +43,12 @@ An exported `.pth` alone is not sufficient.
    **Kompletter Song** for separation of vocals/accompaniment followed by a new mix.
 4. Adjust pitch, index strength, consonant protection, loudness envelope and pitch
    method. Start with the defaults. ±12 semitones shifts the voice by one octave.
+   Under **Erweiterte Einstellungen → Stimmenlautstärke** (advanced settings → voice
+   volume), adjust the new voice from **−24 to +12 dB** in 0.5 dB steps; **0 dB** is
+   unchanged. This works in both voice-only and full-song mode. In song mode, voice
+   gain is applied before mixing; accompaniment has its own control. If needed to
+   prevent clipping, the final mix is turned down as a whole. Separate song stems
+   are exported without these volume adjustments.
 5. Choose WAV/FLAC at 24 bit or MP3 at 320 kbit/s.
 6. Select **Stimme verwandeln** (convert voice). Listen to the result in the browser
    and download it. Song mode also provides separate new-vocal and accompaniment files.
